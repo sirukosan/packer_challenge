@@ -1,6 +1,7 @@
 package com.mobiquityinc.packer;
 
 import com.mobiquityinc.packer.exception.APIException;
+import com.mobiquityinc.packer.exception.Error;
 import com.mobiquityinc.packer.structure.Item;
 import com.mobiquityinc.packer.structure.PackingTask;
 
@@ -13,13 +14,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.mobiquityinc.packer.exception.Error.CANNOT_READ_LINE;
-import static com.mobiquityinc.packer.exception.Error.FILE_NOT_FOUND;
-import static com.mobiquityinc.packer.exception.Error.MAX_WEIGHT_MUST_BE_NUMBER;
-import static com.mobiquityinc.packer.exception.Error.MUST_CONTAIN_ONE_COLON;
-import static com.mobiquityinc.packer.exception.Error.TOO_MANY_ITEMS;
-import static com.mobiquityinc.packer.exception.Error.WRONG_VALUE;
-import static com.mobiquityinc.packer.exception.Error.WRONG_WEIGHT;
+import static com.mobiquityinc.packer.exception.Error.*;
 
 /**
  * Class Packer contains static {@link com.mobiquityinc.packer.Packer#pack}  pack} method
@@ -85,6 +80,9 @@ public class Packer {
         final int maxWeight;
         try {
             maxWeight = (int) (Double.parseDouble(spited[0]) * 100);
+            if(maxWeight > MAX_WEIGHT) {
+                throw new APIException(WRONG_MAX_WEIGHT, lineNumber, MAX_WEIGHT);
+            }
         } catch (NumberFormatException e) {
             throw new APIException(e, MAX_WEIGHT_MUST_BE_NUMBER, lineNumber);
         }

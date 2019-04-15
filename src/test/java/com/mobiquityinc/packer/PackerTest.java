@@ -21,6 +21,8 @@ public class PackerTest {
     private static final String MAX_WEIGHT_SHOULD_BE_NUMBER_TEST = PackerTest.class
             .getResource("max_weight_should_be_number_test").getPath();
     private static final String NO_SUCH_FILE_TEST = "no_such_file_test";
+    private static final String MAX_WEIGHT_TOO_BIG_TEST = PackerTest.class
+            .getResource("max_weight_too_big_test").getPath();
 
     @Test
     public void commonTest() {
@@ -68,6 +70,16 @@ public class PackerTest {
             fail();
         } catch (APIException e) {
             assertEquals(e.getError(), Error.MAX_WEIGHT_MUST_BE_NUMBER);
+        }
+    }
+
+    @Test
+    public void maxWeightTooBigTest() {
+        try {
+            Packer.pack(MAX_WEIGHT_TOO_BIG_TEST);
+            fail();
+        } catch (APIException e) {
+            assertEquals(e.getError(), Error.WRONG_MAX_WEIGHT);
         }
     }
 }
