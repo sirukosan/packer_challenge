@@ -1,4 +1,4 @@
-# Package Challenge
+# Packer Challenge
 ## Introduction
 You want to send your friend a package with different things.
 Each thing you put inside the package has such parameters as index number, weight and cost. The
